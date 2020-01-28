@@ -9,19 +9,8 @@
 </head>
 <body>
 
-<h2>MiniChat</h2>
-<form action="minichat.php" method="POST">
-    <input type="text" name="pseudo" size="50" placeholder="Pseudo" />
-    <input type="text" name="commentaire" size="50" placeholder="Message" />
-    <button type="submit">Envoyer</button>
-</form>
-
-
-<h2>Derniers Messages</h2>
 <?php
-
     // connexion à la BDD
-
     try
     {
         $bdd = new PDO('mysql:host=localhost;dbname=test','root','root');
@@ -30,8 +19,37 @@
     {
         die('Erreur : ' .$e -> getMessage());
     }
+?>
 
-// affichage des messages
+<h2>Le blog</h2>
+
+<?php
+
+    // affichage des articles de blog
+    $rep = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y \') AS date_creation FROM blog ORDER BY ID DESC');
+    while ($data = $rep->fetch())
+    {
+        echo '<h3><a href="post.php?id=' .$data['id']. '">' . htmlspecialchars($data['titre']) . '</a></h3><p>' . nl2br(htmlspecialchars($data['contenu'])) . '</p><p id="comment">Posté le: ' . $data['date_creation'] . '</p><br/>';
+    }
+
+    $rep->closeCursor();
+
+?>
+<a href="add_post.php">Ajouter un post</a>
+<p>_ _ _ _ _</p>
+
+<h2>MiniChat</h2>
+<form action="minichat.php" method="POST">
+    <input type="text" name="pseudo" size="50" placeholder="Pseudo" />
+    <input type="text" name="commentaire" size="50" placeholder="Message" />
+    <button type="submit">Envoyer</button>
+</form>
+
+<h2>Derniers Messages</h2>
+
+<?php
+
+// affichage des messages du minichat
 
 $rep = $bdd->query('SELECT pseudo, commentaire, DATE_FORMAT(date_ajout, \'%d/%m/%Y à %Hh%i\') AS date_ajout FROM minichat ORDER BY ID DESC LIMIT 10');
 while ($data = $rep->fetch())

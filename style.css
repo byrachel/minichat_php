@@ -12,6 +12,17 @@ h2 {
     padding: 20px;
 }
 
+.title {
+    font-family: 'Open Sans', sans-serif;
+    color: grey;
+    font-size: 1em;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px;
+    background-color: silver;
+}
+
 p {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
