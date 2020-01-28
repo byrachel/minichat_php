@@ -33,10 +33,10 @@
 
 // affichage des messages
 
-$rep = $bdd->query('SELECT * FROM minichat ORDER BY ID DESC LIMIT 10');
+$rep = $bdd->query('SELECT pseudo, commentaire, DATE_FORMAT(date_ajout, \'%d/%m/%Y à %Hh%i\') AS date_ajout FROM minichat ORDER BY ID DESC LIMIT 10');
 while ($data = $rep->fetch())
 {
-    echo '<p>' . htmlspecialchars($data['commentaire']) . '</p><p id="comment">' . htmlspecialchars($data['pseudo']) . '</p><br/>';
+    echo '<p>' . htmlspecialchars($data['commentaire']) . '</p><p id="comment">' . htmlspecialchars($data['pseudo']) . ' - Posté le: ' . $data['date_ajout'] . '</p><br/>';
 }
 
 $rep->closeCursor();
