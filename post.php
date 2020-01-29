@@ -22,18 +22,21 @@
 
 
     // affichage de l'article
-    if(isset($_GET['id']))
+    if(isset($_GET['id_billet']))
     {
         $req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y \') AS date_creation FROM blog WHERE id=?');
-        $req->execute(array($_GET['id']));
-        while($data = $req->fetch())
+        $req->execute(array(htmlspecialchars($_GET['id_billet'])));
+        $data = $req->fetch();
+        // Si les données ne sont pas vides
+        if(!empty($data))
         {
             echo '<h3>' . htmlspecialchars($data['titre']) . '</h3><p>' . htmlspecialchars($data['contenu']) . '</p><p id="comment">Posté le: ' . $data['date_creation'] . '</p><br/>';
         }
         $req->closeCursor();
 
+        // affichage des commentaires
         $rep = $bdd->prepare('SELECT * FROM commentaire WHERE id_billet=?');
-        $rep->execute(array($_GET['id']));
+        $rep->execute(array($_GET['id_billet']));
         while($data = $rep->fetch())
         {
             echo '<p>' . htmlspecialchars($data['auteur']) . ' : ' . htmlspecialchars($data['commentaires']) . '</p><p id="comment">Posté le: ' . $data['date_ajout'] . '</p><br/>';
@@ -52,6 +55,7 @@
 <?php
         $rep->closeCursor();
     }
+    else { echo "<p>Aucun article n'est disponible.</p>";}
 
 ?>
 </body>

@@ -20,7 +20,7 @@ if (!empty($_POST['auteur']) && !empty($_POST['commentaires']))
         'auteur'=>htmlspecialchars($_POST['auteur']),
         'commentaires'=>nl2br(htmlspecialchars($_POST['commentaires']))
     ));
-
+    header('location: post.php?id_billet='.$_GET['id_billet'].'');
 }
 
 

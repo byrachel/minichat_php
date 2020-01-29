@@ -29,7 +29,7 @@
     $rep = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y \') AS date_creation FROM blog ORDER BY ID DESC');
     while ($data = $rep->fetch())
     {
-        echo '<h3><a href="post.php?id=' .$data['id']. '">' . htmlspecialchars($data['titre']) . '</a></h3><p>' . nl2br(htmlspecialchars($data['contenu'])) . '</p><p id="comment">Posté le: ' . $data['date_creation'] . '</p><br/>';
+        echo '<h3><a href="post.php?id_billet=' .$data['id']. '">' . htmlspecialchars($data['titre']) . '</a></h3><p>' . nl2br(htmlspecialchars($data['contenu'])) . '</p><p id="comment">Posté le: ' . $data['date_creation'] . '</p><br/>';
     }
 
     $rep->closeCursor();
